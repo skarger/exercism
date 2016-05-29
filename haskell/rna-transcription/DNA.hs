@@ -8,4 +8,4 @@ transformNucleotide 'T' = 'A'
 transformNucleotide  _  = ' '
 
 toRNA :: String -> String
-toRNA dnaStrand = map transformNucleotide dnaStrand
+toRNA = map transformNucleotide
