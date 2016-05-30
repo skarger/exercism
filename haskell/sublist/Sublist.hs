@@ -7,7 +7,7 @@ data Sublist = Equal | Unequal | Sublist | Superlist
 
 sublist :: Eq a => [a] -> [a] -> Sublist
 sublist k l
-  | isInfixOf k l && isInfixOf l k = Equal
+  | l == k = Equal
   | isInfixOf k l = Sublist
   | isInfixOf l k = Superlist
   | otherwise = Unequal
