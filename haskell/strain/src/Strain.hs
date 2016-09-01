@@ -1,7 +1,10 @@
 module Strain (keep, discard) where
 
 discard :: (a -> Bool) -> [a] -> [a]
-discard predicate collection = [x | x <- collection, not $ predicate x]
+discard _ [] = []
+discard predicate (x:xs)
+        | predicate x = discard predicate xs
+        | otherwise = x:discard predicate xs
 
 keep :: (a -> Bool) -> [a] -> [a]
-keep predicate collection = [x | x <- collection, predicate x]
+keep predicate collection = discard (not . predicate) collection
