@@ -2,20 +2,20 @@ module DNA (count, nucleotideCounts) where
 
 import Data.Map (Map, fromList)
 
+nucleotides :: [Char]
+nucleotides = ['A', 'C', 'G', 'T']
+
 count :: Char -> String -> Either String Int
 count c "" = Right 0
 count c (n:ns)
-        | invalidNucleotide c = Left "Invalid nucleotide given to count"
-        | invalidNucleotide n = Left "Invalid nucleotide found in strand"
-        | c == n = fmap (+1) $ count c ns
-        | c /= n = count c ns
-
-invalidNucleotide :: Char -> Bool
-invalidNucleotide c = not $ any (c ==) "ATCG"
+  | not $ elem c nucleotides = Left "Invalid nucleotide given to count"
+  | not $ elem n nucleotides = Left "Invalid nucleotide found in strand"
+  | otherwise = let incrementBy = if c == n then 1 else 0
+                 in fmap (+incrementBy) $ count c ns
 
 nucleotideCounts :: String -> Either String (Map Char Int)
 nucleotideCounts s = 
         case (count 'A' s, count 'C' s, count 'G' s, count 'T' s) of
-              (Right a, Right c, Right g, Right t) ->
-                      Right $ fromList [('A', a), ('C', c), ('G', g), ('T', t)]
-              otherwise -> Left "Invalid nucleotide found in strand"
+          (Right a, Right c, Right g, Right t) ->
+                  Right $ fromList $ zip nucleotides [a, c, g, t]
+          otherwise -> Left "Invalid nucleotide found in strand"
