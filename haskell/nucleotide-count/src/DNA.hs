@@ -15,7 +15,4 @@ count c (n:ns)
 
 nucleotideCounts :: String -> Either String (Map Char Int)
 nucleotideCounts s = 
-        case (count 'A' s, count 'C' s, count 'G' s, count 'T' s) of
-          (Right a, Right c, Right g, Right t) ->
-                  Right $ fromList $ zip "ACGT" [a, c, g, t]
-          otherwise -> Left "Invalid nucleotide found in strand"
+        fmap (fromList . zip nucleotides) (mapM (flip count s) nucleotides)
