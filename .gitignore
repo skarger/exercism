@@ -2,3 +2,7 @@
 **/*.cabal
 **/node_modules
 **/elm-stuff
+
+# clojure
+.nrepl-port
+clojure/**/target
