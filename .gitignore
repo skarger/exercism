@@ -6,3 +6,4 @@
 # clojure
 .nrepl-port
 clojure/**/target
+clojure/**/.lein-failures
