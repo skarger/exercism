@@ -20,5 +20,4 @@ Take one down and pass it around, " (- num 1) " bottles of beer on the wall.\n")
   ([start end]
    (cond
      (= start end) (verse end)
-     (= start 0) (verse 0)
      :else (clojure.string/join "\n" [(verse start) (sing (- start 1) end)]))))

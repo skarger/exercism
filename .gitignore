@@ -7,3 +7,4 @@
 .nrepl-port
 clojure/**/target
 clojure/**/.lein-failures
+clojure/**/.lein-repl-history
