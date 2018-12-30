@@ -1,7 +1,8 @@
 (ns collatz-conjecture)
 
 (defn collatz [num]
-  (cond
-    (= num 1) 0
-    (even? num) (+ 1 (collatz (/ num 2)))
-    :else (+ 1 (collatz (+ 1 (* 3 num))))))
+  (if (= num 1)
+    0
+    (let [current_step 1
+          next_number (if (even? num) (/ num 2) (+ 1 (* 3 num)))]
+      (+ current_step (collatz next_number)))))
