@@ -8,3 +8,7 @@
 clojure/**/target
 clojure/**/.lein-failures
 clojure/**/.lein-repl-history
+
+# intellij
+**/.idea/
+**/*.iml
