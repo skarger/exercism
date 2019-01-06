@@ -1,22 +1,27 @@
 (ns spiral-matrix)
 
-;; prepares coordinates of the "outer wall" of a spiral starting at some coordinate
-(defn outer-coordinates [start current-n]
-  (let [upper-bound (+ start current-n)
-        right (map vector (take current-n (repeat start)) (range start upper-bound))
-        down (map vector (range (+ start 1) upper-bound) (take (- current-n 1) (repeat (- upper-bound 1))))
-        left (map vector (take (- current-n 1) (repeat (- upper-bound 1))) (range (- upper-bound 2) (- start 1) -1))
-        up (map vector (range (- upper-bound 2) start -1) (take (- current-n 2) (repeat start)))]
-    (concat right down left up)))
+;; prepares coordinates of the "outer wall" of a spiral starting at some depth
+(defn outer-coordinates [start-depth current-n]
+  (let [upper-bound (+ start-depth current-n)
+        right (list (take current-n (repeat start-depth))
+                    (range start-depth upper-bound))
+        down  (list (range (+ start-depth 1) upper-bound)
+                    (take (- current-n 1) (repeat (- upper-bound 1))))
+        left  (list (take (- current-n 1) (repeat (- upper-bound 1)))
+                    (range (- upper-bound 2) (- start-depth 1) -1))
+        up    (list (range (- upper-bound 2) start-depth -1)
+                    (take (- current-n 2) (repeat start-depth)))
+        pairs #(apply map vector %)]
+    (mapcat pairs (list right down left up))))
 
 ;; ordered coordinates for entire spiral
-(defn spiral-coordinates [coordinates-so-far start current-n]
+(defn spiral-coordinates [coordinates-so-far start-depth current-n]
   (cond (= current-n 0) coordinates-so-far
-        (= current-n 1) (conj coordinates-so-far (vector start start))
+        (= current-n 1) (conj coordinates-so-far (vector start-depth start-depth))
         :else
         (spiral-coordinates
-          (into [] (concat coordinates-so-far (outer-coordinates start current-n)))
-          (+ start 1) (- current-n 2))))
+          (into [] (concat coordinates-so-far (outer-coordinates start-depth current-n)))
+          (+ start-depth 1) (- current-n 2))))
 
 (defn preallocate-matrix [n]
   (letfn [(row [n] (into [] (take n (repeat -1))))]
