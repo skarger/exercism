@@ -2,23 +2,23 @@
 (require '[clojure.string :as str])
 
 (defn translate-codon [codon]
-  ({"AUG" "Methionine"
-    "UUU" "Phenylalanine"
-    "UUC" "Phenylalanine"
-    "UUA" "Leucine"
-    "UUG" "Leucine"
-    "UCU" "Serine"
-    "UCC" "Serine"
-    "UCA" "Serine"
-    "UCG" "Serine"
-    "UAU" "Tyrosine"
-    "UAC" "Tyrosine"
-    "UGU" "Cysteine"
-    "UGC" "Cysteine"
-    "UGG" "Tryptophan"
-    "UAA" "STOP"
-    "UAG" "STOP"
-    "UGA" "STOP"} codon "STOP"))
+  ({:AUG "Methionine"
+    :UUU "Phenylalanine"
+    :UUC "Phenylalanine"
+    :UUA "Leucine"
+    :UUG "Leucine"
+    :UCU "Serine"
+    :UCC "Serine"
+    :UCA "Serine"
+    :UCG "Serine"
+    :UAU "Tyrosine"
+    :UAC "Tyrosine"
+    :UGU "Cysteine"
+    :UGC "Cysteine"
+    :UGG "Tryptophan"
+    :UAA "STOP"
+    :UAG "STOP"
+    :UGA "STOP"} (keyword codon) "STOP"))
 
 (defn convert-proteins [result nucleotides]
   (let [protein (translate-codon (str/join (take 3 nucleotides)))]
